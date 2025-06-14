@@ -1,6 +1,9 @@
 #include "buffer.h"
+#include "editor.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "terminal.h"
 
 #define INITIAL_GAP_SIZE 128
 
@@ -69,7 +72,7 @@ void buffer_move_gap_to(GapBuffer* gb, size_t pos) {
 }
 
 void buffer_insert_char(GapBuffer* gb, char c) {
-    if (gb->gap_size == 0) {
+    if (gb->gap_size == 0) { 
         expand_gap(gb);
     }
 
@@ -79,6 +82,7 @@ void buffer_insert_char(GapBuffer* gb, char c) {
 
 void buffer_delete_char(GapBuffer* gb) {
     if (gb->gap_start > 0) {
+        delete_cursor_character();
         gb->gap_start--;
         gb->gap_size++;
     }

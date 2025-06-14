@@ -5,7 +5,11 @@
 
 #define KEY_ESC     27
 #define KEY_ENTER   13
+#ifdef _WIN32
+#define KEY_BACKSPACE 8
+#else
 #define KEY_BACKSPACE 127
+#endif
 #define KEY_LEFT    1000
 #define KEY_RIGHT   1001
 #define KEY_UP      1002
@@ -22,5 +26,6 @@ void terminal_refresh_screen(void);
 
 void terminal_write(const char* str);
 void terminal_write_escape(const char* str);
+void delete_cursor_character();
 
 #endif

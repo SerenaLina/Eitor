@@ -26,6 +26,7 @@ void terminal_init(void) {
     GetConsoleMode(hStdin, &original_mode);
     DWORD mode = original_mode;
     mode &= ~(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
+    //mode &= ~(ENABLE_LINE_INPUT);
     SetConsoleMode(hStdin, mode);
 #else
     tcgetattr(STDIN_FILENO, &original_termios);
@@ -152,5 +153,21 @@ void terminal_write_escape(const char* str) {
 #ifdef _WIN32
 #else
     terminal_write(str);
+#endif
+}
+
+void delete_cursor_character()
+{
+#ifdef _WIN32
+    const char *text = "\0";
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD written;
+
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(hConsole,&csbi);
+    COORD pos = csbi.dwCursorPosition;
+    WriteConsoleOutputCharacter(hConsole,text,strlen(text),pos,&written);
+#else
+    // TODO: Linux Delete.
 #endif
 }

@@ -4,7 +4,7 @@ project(eitor C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-# 添加源文件
+
 add_executable(eitor
     src/main.c
     src/buffer.c
@@ -12,10 +12,9 @@ add_executable(eitor
     src/terminal.c
 )
 
-# 包含头文件目录
+
 target_include_directories(eitor PRIVATE include)
 
-# 设置编译选项
 if(MSVC)
     target_compile_options(eitor PRIVATE /W4)
 else()
